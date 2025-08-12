@@ -8,12 +8,14 @@ flutter pub publish --dry-run
 
 Simply call the `checkForUpdates` function to check for updates and handle them accordingly.
 
-Then you can use the `update` function to update the app. (Or ideally let your user choose)
-
 ```dart
 final info = await AppUpdateHelper.checkForUpdates();
 if (info == null) return; // No update available
+```
 
+Then you can use the `update` function to update the app. (Or ideally let your user choose)
+
+```dart
 // let's say you want to update only if major/minor
 switch (info.updateType) {
   case UpdateType.major:

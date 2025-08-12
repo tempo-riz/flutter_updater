@@ -1,6 +1,6 @@
 name: app_update_helper
 description: "Simply check for updates, then based on the version (major, minor, patch) decide to update or not. "
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/tempo-riz/flutter_updater
 
 environment:
