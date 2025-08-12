@@ -1,23 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_update_helper/version.dart';
+import 'package:app_update_helper/src/version.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<Version?> getPlayStoreVersion(String packageName) async {
-  final uri = Uri.https("play.google.com", "/store/apps/details", {
-    "id": packageName,
-  });
+  final uri = Uri.https("play.google.com", "/store/apps/details", {"id": packageName});
 
   try {
     final response = await http.get(uri);
 
-    final String? newVersion = RegExp(
-      r',\[\[\["([0-9,\.]*)"]],',
-    ).firstMatch(response.body)!.group(1);
+    final String? newVersion = RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body)!.group(1);
     return Version.parse(newVersion!);
   } catch (e) {
     debugPrint("Error fetching version from Play Store: $e");
@@ -48,9 +44,7 @@ Future<Version?> fetchStoreVersion(String packageName) async {
   } else if (Platform.isIOS) {
     return getAppleStoreVersion(packageName);
   }
-  throw UnsupportedError(
-    "This method is only supported on iOS and Android platforms.",
-  );
+  throw UnsupportedError("This method is only supported on iOS and Android platforms.");
 }
 
 Future<PackageInfo> getPackageInfo() async {
@@ -67,7 +61,5 @@ void openAndroidPage() async {
   final info = await getPackageInfo();
   final packageName = info.packageName;
 
-  launchUrl(
-    Uri.parse("https://play.google.com/store/apps/details?id=$packageName"),
-  );
+  launchUrl(Uri.parse("https://play.google.com/store/apps/details?id=$packageName"));
 }
