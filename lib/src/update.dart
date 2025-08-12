@@ -28,7 +28,9 @@ class Update {
     } else if (newVersion.patch > oldVersion.patch) {
       return UpdateType.patch;
     }
-    throw ArgumentError('No update type found between $oldVersion and $newVersion');
+    throw ArgumentError(
+      'No update type found between $oldVersion and $newVersion',
+    );
   }
 
   /// Checks if the update is a major update.

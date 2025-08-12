@@ -53,7 +53,9 @@ class AppUpdateHelper {
         openAndroidPage();
       }
     } else {
-      throw UnsupportedError("This method is only supported on iOS and Android platforms.");
+      throw UnsupportedError(
+        "This method is only supported on iOS and Android platforms.",
+      );
     }
   }
 }
