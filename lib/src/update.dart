@@ -1,7 +1,7 @@
 import 'package:app_update_helper/src/version.dart';
 
 /// Represents the type of update.
-enum UpdateType { major, minor, patch }
+enum UpdateType { none, major, minor, patch }
 
 /// Represents an update between two versions.
 class Update {
@@ -28,9 +28,7 @@ class Update {
     } else if (newVersion.patch > oldVersion.patch) {
       return UpdateType.patch;
     }
-    throw ArgumentError(
-      'No update type found between $oldVersion and $newVersion',
-    );
+    return UpdateType.none;
   }
 
   /// Checks if the update is a major update.
@@ -41,4 +39,10 @@ class Update {
 
   /// Checks if the update is a patch update.
   bool get isPatch => type == UpdateType.patch;
+
+  /// Creates a [Update] instance representing no update available.
+  factory Update.none(String version) {
+    final v = Version.parse(version);
+    return Update(v, v);
+  }
 }

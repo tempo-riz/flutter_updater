@@ -12,7 +12,7 @@ class AppUpdateHelper {
   AppUpdateHelper._();
 
   /// Check for updates and return the current/update version if any.
-  static Future<Update?> checkForUpdate() async {
+  static Future<Update> checkForUpdate() async {
     try {
       final info = await getPackageInfo();
 
@@ -21,15 +21,15 @@ class AppUpdateHelper {
 
       if (newVersion == null) {
         debugPrint("Could not fetch the latest version.");
-        return null;
+        return Update.none(info.version);
       }
 
-      if (currentVersion == newVersion) return null; // No update available
+      if (currentVersion == newVersion) return Update.none(info.version); // No update available
 
       return Update(currentVersion, newVersion);
     } catch (e) {
       debugPrint("Error checking for updates: $e");
-      return null;
+      return Update.none("0.0.0");
     }
   }
 
@@ -55,9 +55,7 @@ class AppUpdateHelper {
         openAndroidPage();
       }
     } else {
-      throw UnsupportedError(
-        "This method is only supported on iOS and Android platforms.",
-      );
+      throw UnsupportedError("This method is only supported on iOS and Android platforms.");
     }
   }
 }
