@@ -36,26 +36,26 @@ class AppUpdateHelper {
   /// On android use the in-app update API. fallbacks to opening the play store page.
   ///
   /// On iOS open the app store page : you must provide the `iosAppId`.
-  static void update({String? iosAppId}) async {
+  static void update({String? iosAppId, bool useInAppUpdate = true}) async {
     if (Platform.isIOS) {
       if (iosAppId == null) {
         throw ArgumentError("iosAppId must be provided for iOS updates.");
       }
       openIosPage(iosAppId);
     } else if (Platform.isAndroid) {
-      if (await AppUpdateHelperPlatform.instance.canUpdate()) {
-        try {
+      if (!useInAppUpdate) return openAndroidPage();
+      // try in app, fallback store page
+      try {
+        if (await AppUpdateHelperPlatform.instance.canUpdate()) {
           AppUpdateHelperPlatform.instance.update();
-        } catch (e) {
+        } else {
           openAndroidPage();
         }
-      } else {
+      } catch (e) {
         openAndroidPage();
       }
     } else {
-      throw UnsupportedError(
-        "This method is only supported on iOS and Android platforms.",
-      );
+      throw UnsupportedError("This method is only supported on iOS and Android platforms.");
     }
   }
 }
