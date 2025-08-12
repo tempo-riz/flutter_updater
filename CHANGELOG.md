@@ -1,4 +1,4 @@
-## 1.0.4
+## 1.0.5
 fix android build
 ## 1.0.2
 update docs, hide implementation details
