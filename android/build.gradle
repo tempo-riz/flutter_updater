@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("com.android.tools.build:gradle:8.12.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
@@ -27,7 +27,7 @@ apply plugin: "kotlin-android"
 android {
     namespace = "com.zealousfoundry.app_update_helper"
 
-    compileSdk = 35
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -49,7 +49,7 @@ android {
 
     dependencies {
         testImplementation("org.jetbrains.kotlin:kotlin-test")
-        testImplementation("org.mockito:mockito-core:5.0.0")
+        testImplementation("org.mockito:mockito-core:5.18.0")
     }
 
     testOptions {
@@ -63,4 +63,7 @@ android {
             }
         }
     }
+}
+dependencies {
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
 }

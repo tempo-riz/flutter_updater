@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import android.app.Activity
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -61,12 +62,13 @@ class AppUpdateHelperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun canUpdate(result: Result) {
-        if (appUpdateManager == null) {
+         val manager = appUpdateManager
+        if (manager == null) {
             result.error("NO_ACTIVITY", "Activity is null", null)
             return
         }
 
-      appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+      manager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             val available =
                 appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE &&
                         appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
@@ -77,21 +79,26 @@ class AppUpdateHelperPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun update(result: Result) {
-        if (activity == null || appUpdateManager == null) {
+        val activity = this.activity
+        val manager = this.appUpdateManager
+        if (activity == null || manager == null) {
             result.error("NO_ACTIVITY", "Activity is null", null)
             return
         }
 
-      appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-        appUpdateManager.startUpdateFlowForResult(
-                appUpdateInfo,
-                AppUpdateType.IMMEDIATE,
-                activity,
-                42 // requestCode (not used)
-            )
-            result.success(true)
+        manager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+            val options = AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
+
+            manager.startUpdateFlow(appUpdateInfo, activity, options)
+                .addOnSuccessListener {
+                    // Update flow started successfully
+                    result.success(true)
+                }
+                .addOnFailureListener {
+                    result.error("UPDATE_FAILED", it.message, null)
+                }
         }.addOnFailureListener {
-            result.error("UPDATE_FAILED", it.message, null)
+            result.error("CHECK_FAILED", it.message, null)
         }
     }
 
