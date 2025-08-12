@@ -9,9 +9,14 @@ class MethodChannelAppUpdateHelper extends AppUpdateHelperPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('app_update_helper');
 
+  // we call this only if store version is newer, so should be successful
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool> canUpdate() async {
+    return await methodChannel.invokeMethod<bool?>('canUpdate') ?? false;
+  }
+
+  @override
+  void update() {
+    methodChannel.invokeMethod('update');
   }
 }

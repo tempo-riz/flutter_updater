@@ -23,7 +23,11 @@ abstract class AppUpdateHelperPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<bool> canUpdate() {
+    throw UnimplementedError('canUpdate() has not been implemented.');
+  }
+
+  void update() {
+    throw UnimplementedError('update() has not been implemented.');
   }
 }
