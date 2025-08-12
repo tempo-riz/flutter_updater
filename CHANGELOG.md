@@ -1,3 +1,5 @@
+## 1.0.3
+fix android build
 ## 1.0.2
 update docs, hide implementation details
 
