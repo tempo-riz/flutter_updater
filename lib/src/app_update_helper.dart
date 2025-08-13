@@ -24,7 +24,9 @@ class AppUpdateHelper {
         return Update.none(info.version);
       }
 
-      if (currentVersion == newVersion) return Update.none(info.version); // No update available
+      if (currentVersion == newVersion) {
+        return Update.none(info.version); // No update available
+      }
 
       return Update(currentVersion, newVersion);
     } catch (e) {
@@ -55,7 +57,9 @@ class AppUpdateHelper {
         openAndroidPage();
       }
     } else {
-      throw UnsupportedError("This method is only supported on iOS and Android platforms.");
+      throw UnsupportedError(
+        "This method is only supported on iOS and Android platforms.",
+      );
     }
   }
 }

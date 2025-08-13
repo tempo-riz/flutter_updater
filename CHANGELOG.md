@@ -1,4 +1,7 @@
 ## 1.0.6
+format for pub.dev
+
+## 1.0.6
 update README.md for clarity
 
 ## 1.0.5

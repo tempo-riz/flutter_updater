@@ -40,6 +40,9 @@ class Update {
   /// Checks if the update is a patch update.
   bool get isPatch => type == UpdateType.patch;
 
+  /// Checks if the update is a new update.
+  bool get isNew => type != UpdateType.none;
+
   /// Creates a [Update] instance representing no update available.
   factory Update.none(String version) {
     final v = Version.parse(version);

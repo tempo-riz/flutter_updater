@@ -38,7 +38,12 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: userCanUpdate ? ElevatedButton(onPressed: () => AppUpdateHelper.update(), child: const Text('Update App')) : const Text("no update available"),
+          child: userCanUpdate
+              ? ElevatedButton(
+                  onPressed: () => AppUpdateHelper.update(),
+                  child: const Text('Update App'),
+                )
+              : const Text("no update available"),
         ),
       ),
     );
