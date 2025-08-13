@@ -15,7 +15,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final Update? update = await AppUpdateHelper.checkForUpdate();
+    final Update update = await AppUpdateHelper.checkForUpdate();
     expect(update, isNotNull);
   });
 }
