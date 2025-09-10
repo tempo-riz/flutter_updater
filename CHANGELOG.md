@@ -1,3 +1,6 @@
+## 1.0.8
+format for pub.dev
+
 ## 1.0.7
 format for pub.dev
 
