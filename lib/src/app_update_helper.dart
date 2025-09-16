@@ -31,7 +31,7 @@ class AppUpdateHelper {
       return Update(currentVersion, newVersion);
     } catch (e) {
       debugPrint("Error checking for updates: $e");
-      return Update.none("0.0.0");
+      return Update.none(null);
     }
   }
 

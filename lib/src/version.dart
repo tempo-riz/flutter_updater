@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 /// Represents a semantic version.
 class Version {
   /// The major version number.
@@ -28,4 +29,14 @@ class Version {
   String toString() {
     return '$major.$minor.$patch';
   }
+
+  @override
+  bool operator ==(covariant Version other) {
+    if (identical(this, other)) return true;
+
+    return other.major == major && other.minor == minor && other.patch == patch;
+  }
+
+  @override
+  int get hashCode => major.hashCode ^ minor.hashCode ^ patch.hashCode;
 }

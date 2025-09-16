@@ -1,3 +1,6 @@
+## 1.0.9
+fix equality operator in Update && Version
+
 ## 1.0.8
 format for pub.dev
 

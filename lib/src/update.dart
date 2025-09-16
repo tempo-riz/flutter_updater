@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:app_update_helper/src/version.dart';
 
 /// Represents the type of update.
@@ -40,12 +41,31 @@ class Update {
   /// Checks if the update is a patch update.
   bool get isPatch => type == UpdateType.patch;
 
-  /// Checks if the update is a new update.
-  bool get isNew => type != UpdateType.none;
+  /// Checks if there is any update available.
+  bool get isAvailable => type != UpdateType.none;
+
+  /// Checks if the update is either a major or minor update.
+  ///
+  /// This is the recommanded way to check for significant updates.
+  ///
+  /// It Means either the app has breaking changes or new features.
+  bool get isMajorOrMinor => isMajor || isMinor;
 
   /// Creates a [Update] instance representing no update available.
-  factory Update.none(String version) {
-    final v = Version.parse(version);
+  ///
+  /// Either with current version or '0.0.0' if version is null or invalid.
+  factory Update.none(String? version) {
+    final v = Version.parse(version ?? '0.0.0');
     return Update(v, v);
   }
+
+  @override
+  bool operator ==(covariant Update other) {
+    if (identical(this, other)) return true;
+
+    return other.oldVersion == oldVersion && other.newVersion == newVersion;
+  }
+
+  @override
+  int get hashCode => oldVersion.hashCode ^ newVersion.hashCode;
 }
